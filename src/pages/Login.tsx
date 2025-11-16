@@ -1,9 +1,11 @@
 import { useState, type ChangeEvent, type FC, type ReactNode } from "react";
 import "@/assets/font/iconfont.js";
 import { clsx } from "clsx";
+import githubConfig from "@/config/github.ts";
 
 const pageConfig = {
-  bgImage: "sm:bg-[url('https://raw.githubusercontent.com/bytebase/bytebase.com/main/public/images/login-bg.webp')]",
+  bgImage:
+    "sm:bg-[url('https://raw.githubusercontent.com/bytebase/bytebase.com/main/public/images/login-bg.webp')]",
   logoImage: "bg-[url('https://www.bytebase.com/images/logo.svg')]",
 };
 
@@ -19,7 +21,9 @@ const Login: FC = () => {
           <div className="w-full sm:w-[320px]">
             {/* 头部 */}
             <header className="text-center">
-              <h1 className={`text-[0px] h-[52px] bg-contain bg-center bg-no-repeat ${pageConfig.logoImage}`}>
+              <h1
+                className={`text-[0px] h-[52px] bg-contain bg-center bg-no-repeat ${pageConfig.logoImage}`}
+              >
                 Bytebase
               </h1>
               <h2 className="text-2xl mt-6 mb-4">欢迎</h2>
@@ -31,7 +35,9 @@ const Login: FC = () => {
             </div>
             {/* 分割线 */}
             <div className="w-full h-[1px] bg-border flex justify-center items-center my-8">
-              <span className="text-xs bg-white w-1/12 flex justify-center items-center">或</span>
+              <span className="text-xs bg-white w-1/12 flex justify-center items-center">
+                或
+              </span>
             </div>
             {/* 邮件登录 */}
             <div>
@@ -70,19 +76,43 @@ const OtherLoginButton: FC<{
 }> = ({ title, icon }) => {
   return (
     <CommonButton className="px-4 flex gap-x-4 justify-start">
-      <svg className="icon" style={{ width: "20px", height: "20px" }} aria-hidden="true">
+      <svg
+        className="icon"
+        style={{ width: "20px", height: "20px" }}
+        aria-hidden="true"
+      >
         <use xlinkHref={`#icon-${icon}`}></use>
       </svg>
       <span className="text-base">{title}</span>
     </CommonButton>
   );
 };
+// 谷歌登录按钮
 const GoogleButton = () => {
   return <OtherLoginButton icon="google" title="继续使用 Google" />;
 };
+// Github登录按钮
 const GithubButton = () => {
-  return <OtherLoginButton icon="github" title="继续使用 Github" />;
+
+  return (
+    <form action="https://github.com/login/oauth/authorize" method="GET">
+      <input
+        type="text"
+        className="hidden"
+        name="client_id"
+        value={githubConfig.client_id}
+      />
+      <input
+        type="text"
+        className="hidden"
+        name="redirect_uri"
+        value="https://jzlspck.github.io/bytebase/dist/github"
+      />
+      <OtherLoginButton icon="github" title="继续使用 Github" />
+    </form>
+  );
 };
+// Microsoft登录按钮
 const MicrosoftButton = () => {
   return (
     <OtherLoginButton icon="microsoft" title="继续使用 Microsoft Account" />
@@ -129,21 +159,29 @@ const EmailLogin = () => {
           value={email}
           onChange={handleEmailChange}
         />
-        <span className={clsx(
-          "absolute left-4 top-1/2 -translate-y-1/2 transition-all text-base text-[#65676e] bg-white px-2 peer-focus:text-primary peer-focus:left-2 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-sm peer-valid:left-2 peer-valid:top-0 peer-valid:-translate-y-1/2 peer-valid:text-sm dark:bg-black",
-          error && "text-red-500 peer-focus:text-red-500 peer-valid:text-red-500"
-        )}>
+        <span
+          className={clsx(
+            "absolute left-4 top-1/2 -translate-y-1/2 transition-all text-base text-[#65676e] bg-white px-2 peer-focus:text-primary peer-focus:left-2 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-sm peer-valid:left-2 peer-valid:top-0 peer-valid:-translate-y-1/2 peer-valid:text-sm dark:bg-black",
+            error &&
+              "text-red-500 peer-focus:text-red-500 peer-valid:text-red-500"
+          )}
+        >
           电子邮箱地址*
         </span>
       </label>
       {/* 错误信息 */}
-      { error && <p className="text-red-500 text-xs mt-2 flex items-center gap-x-2">
-        <svg className="icon" style={{ width: "14px", height: "14px" }} aria-hidden="true">
-          <use xlinkHref="#icon-Shapex"></use>
-        </svg>
-        {error}
-      </p>
-      }
+      {error && (
+        <p className="text-red-500 text-xs mt-2 flex items-center gap-x-2">
+          <svg
+            className="icon"
+            style={{ width: "14px", height: "14px" }}
+            aria-hidden="true"
+          >
+            <use xlinkHref="#icon-Shapex"></use>
+          </svg>
+          {error}
+        </p>
+      )}
       {/* 提交按钮 */}
       <CommonButton
         className="bg-primary border-none mt-6 text-white text-base justify-center transition-shadow hover:shadow-inner"
