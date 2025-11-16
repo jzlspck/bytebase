@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useSearchParams, useNavigate } from "react-router";
 import githubConfig from "@/config/github";
 
-const GithubLogin: FC = () => {
+const Github: FC = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const GithubLogin: FC = () => {
           type="text"
           className="hidden"
           name="redirect_uri"
-          value="https://jzlspck.github.io/bytebase/dist/"
+          value="https://jzlspck.github.io/bytebase/#/"
         />
         <input
           type="text"
@@ -49,4 +49,4 @@ const GithubLogin: FC = () => {
   );
 };
 
-export default GithubLogin;
+export default Github;

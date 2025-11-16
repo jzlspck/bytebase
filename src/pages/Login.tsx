@@ -106,7 +106,7 @@ const GithubButton = () => {
         type="text"
         className="hidden"
         name="redirect_uri"
-        value="https://jzlspck.github.io/bytebase/dist/github"
+        value="https://jzlspck.github.io/bytebase/#/github"
       />
       <OtherLoginButton icon="github" title="继续使用 Github" />
     </form>
