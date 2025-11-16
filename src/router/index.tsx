@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 
@@ -10,6 +10,11 @@ const router = createBrowserRouter([
   {
     path: '/login',
     Component: Login
+  },
+  {
+    // 所有其他路径都重定向到首页
+    path: '*',
+    loader: () => redirect('/')
   }
 ]);
 

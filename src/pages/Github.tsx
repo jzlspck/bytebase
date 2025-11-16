@@ -42,7 +42,7 @@ const GithubLogin: FC = () => {
         <input type="text" className="hidden" name="code" value={code} />
       </form>
       {/* 简单 loading */}
-      <div className="flex items-center justify-center">
+      <div className="w-screen h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     </>
