@@ -10,7 +10,8 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (!access_token) {
-      navigate("/login");
+      alert("请先登录");
+      navigate("/bytebase/login");
     } else {
       // 请求用户数据
       const abortController = new AbortController();

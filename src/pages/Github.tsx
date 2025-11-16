@@ -8,7 +8,7 @@ const Github: FC = () => {
   const navigate = useNavigate();
   // 没有code参数，跳转到登录页
   if (!code) {
-    navigate("/login");
+    navigate("/bytebase/login");
     return null;
   }
 
@@ -31,7 +31,7 @@ const Github: FC = () => {
           type="text"
           className="hidden"
           name="redirect_uri"
-          value="https://jzlspck.github.io/bytebase/#/"
+          value="https://jzlspck.github.io/bytebase/"
         />
         <input
           type="text"
