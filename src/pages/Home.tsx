@@ -12,6 +12,7 @@ const Home: FC = () => {
     if (!access_token) {
       navigate("/login");
     } else {
+      // 请求用户数据
       const abortController = new AbortController();
       let ignore = false;
       fetch("https://api.github.com/user", {
@@ -26,6 +27,7 @@ const Home: FC = () => {
         }
       });
       return () => {
+        // 清理函数中取消请求
         ignore = true;
         abortController.abort();
       }
