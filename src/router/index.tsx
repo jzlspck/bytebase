@@ -1,8 +1,8 @@
-import { createBrowserRouter, redirect } from "react-router";
+import { redirect, createHashRouter } from "react-router";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     Component: Home
