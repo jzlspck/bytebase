@@ -5,11 +5,11 @@ export default {
     extend: {
       colors: {
         // 主题色
-        primary: "",
+        primary: "#4F46E5",
         // 边框色
-        border: "",
+        border: "#c9cace",
         // 文本颜色
-        text: "",
+        text: "#1e212a",
       },
     },
   },
