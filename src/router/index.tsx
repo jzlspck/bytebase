@@ -1,9 +1,9 @@
-import { redirect, createHashRouter } from "react-router";
+import { redirect, createBrowserRouter } from "react-router";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Github from "@/pages/Github";
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/bytebase",
     children: [
