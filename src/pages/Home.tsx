@@ -1,39 +1,61 @@
-import type { FC } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
-import { useState, useEffect } from 'react';
+import type { FC } from "react";
+import { useSearchParams } from "react-router";
+import { useState, useEffect } from "react";
+import githubConfig from "../config/github";
 
 const Home: FC = () => {
   const [searchParams] = useSearchParams();
-  const access_token = searchParams.get("access_token");
-  const navigate = useNavigate();
+  const code = searchParams.get("code");
   const [userInfo, setUserInfo] = useState<object>({});
 
   useEffect(() => {
-    if (!access_token) {
-      alert("请先登录");
-      navigate("/bytebase/login");
-    } else {
-      // 请求用户数据
-      const abortController = new AbortController();
-      let ignore = false;
-      fetch("https://api.github.com/user", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${access_token}`,
-        },
-        signal: abortController.signal,
-      }).then(res => res.json()).then(data => {
-        if (!ignore) {
-          setUserInfo(data);
-        }
-      });
-      return () => {
-        // 清理函数中取消请求
-        ignore = true;
-        abortController.abort();
-      }
+    if (!code) {
+      return;
     }
-  }, [access_token, navigate]);
+    let ignore = false;
+    // 如果有code参数，发起请求获取access_token
+    const requestToken = () => {
+      fetch("https://github.com/login/oauth/access_token", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          client_id: githubConfig.client_id,
+          client_secret: githubConfig.client_secret,
+          code,
+          redirect_uri: "https://jzlspck.github.io/bytebase/",
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (ignore) {
+            return;
+          }
+          if (!data.access_token) {
+            return;
+          }
+          // 发起请求获取用户信息
+          fetch("https://api.github.com/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${data.access_token}`,
+            },
+          })
+            .then((res) => res.json())
+            .then((userData) => {
+              if (ignore) {
+                return;
+              }
+              setUserInfo(userData);
+            });
+        });
+    };
+    requestToken();
+    return () => {
+      ignore = true;
+    };
+  }, [code]);
 
   console.log(userInfo);
 
