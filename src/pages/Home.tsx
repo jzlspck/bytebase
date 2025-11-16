@@ -1,15 +1,19 @@
 import type { FC } from "react";
-import { useSearchParams } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import githubConfig from "../config/github";
 
 const Home: FC = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
-  const [userInfo, setUserInfo] = useState<object>({});
+  const [userInfo, setUserInfo] = useState<object | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!code) {
+      if (!userInfo) {
+        navigate("/login");
+      }
       return;
     }
     let ignore = false;
