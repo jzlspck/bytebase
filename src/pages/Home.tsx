@@ -17,6 +17,7 @@ const Home: FC = () => {
   useEffect(() => {
     // 没有code也没有userInfo，跳转到登录页
     if (!userInfo && !code) {
+      alert("请先登录");
       navigate("/login");
       return;
     }
