@@ -1,23 +1,26 @@
 import type { FC } from "react";
-import { useSearchParams, useNavigate } from "react-router";
 import githubConfig from "@/config/github";
+import { useRef, useEffect } from "react";
 
-const Github: FC = () => {
-  const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
-  const navigate = useNavigate();
-  // 没有code参数，跳转到登录页
-  if (!code) {
-    navigate("/bytebase/login");
-    return null;
-  }
+const Github: FC<{ code: string }> = ({ code }) => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const isSubmit = useRef(false);
+
+  useEffect(() => {
+    if (!formRef.current) {
+      return;
+    }
+    if (!isSubmit.current) {
+      formRef.current.submit();
+      isSubmit.current = true;
+    }
+  }, []);
 
   return (
     <>
       {/* 立即发起请求，获取access_token */}
       <form
-        className="hidden"
-        ref={(el) => el?.submit()}
+        ref={formRef}
         action="https://github.com/login/oauth/access_token"
         method="POST"
       >
@@ -25,21 +28,24 @@ const Github: FC = () => {
           type="text"
           className="hidden"
           name="client_id"
+          readOnly
           value={githubConfig.client_id}
         />
         <input
           type="text"
           className="hidden"
           name="redirect_uri"
-          value="https://jzlspck.github.io/bytebase/"
+          readOnly
+          value="http://localhost:5173"
         />
         <input
           type="text"
           className="hidden"
           name="client_secret"
+          readOnly
           value={githubConfig.client_secret}
         />
-        <input type="text" className="hidden" name="code" value={code} />
+        <input type="text" className="hidden" name="code" readOnly value={code} />
       </form>
       {/* 简单 loading */}
       <div className="w-screen h-screen flex items-center justify-center">

@@ -100,13 +100,15 @@ const GithubButton = () => {
         type="text"
         className="hidden"
         name="client_id"
+        readOnly
         value={githubConfig.client_id}
       />
       <input
         type="text"
         className="hidden"
         name="redirect_uri"
-        value="https://jzlspck.github.io/bytebase/"
+        readOnly
+        value={githubConfig.redirect_uri}
       />
       <OtherLoginButton icon="github" title="继续使用 Github" />
     </form>
