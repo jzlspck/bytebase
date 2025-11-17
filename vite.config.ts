@@ -16,7 +16,7 @@ export default defineConfig(({ command }) => ({
       "/login/oauth/access_token": {
         target: "https://github.com",
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },

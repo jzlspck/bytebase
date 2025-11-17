@@ -7,7 +7,12 @@ const Home: FC = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState<unknown>(null);
+  const [userInfo, setUserInfo] = useState<{
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+  } | null>(null);
 
   useEffect(() => {
     // 没有code也没有userInfo，跳转到登录页
@@ -27,8 +32,16 @@ const Home: FC = () => {
   return (
     <>
       <h1>Home</h1>
+      {userInfo && (
+        <>
+          <img src={userInfo.avatar_url} alt={userInfo.login} className="w-12 h-12 rounded-full" />
+          <a href={userInfo.html_url} target="_blank" rel="noreferrer" className="text-blue-600">
+            {userInfo.login}
+          </a>
+        </>
+      )}
     </>
   );
-}
+};
 
 export default Home;
