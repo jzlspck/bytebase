@@ -4,7 +4,7 @@ import Login from "@/pages/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/bytebase",
     Component: Home,
   },
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   {
     // 所有其他路径都重定向到首页
     path: "*",
-    loader: () => redirect("/"),
+    loader: () => redirect("/bytebase"),
   },
 ]);
 
